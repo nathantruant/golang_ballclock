@@ -98,3 +98,24 @@ func TestCalculateDaysUntilDefault(t *testing.T) {
 		t.Errorf("Expected: %v Actual:  %v", expected, actual)
 	}
 }
+
+// Used to test the least number of days possible before the clock is in default state
+// Result: 12
+// func TestCalculateMinumDaysUntilDefault(t *testing.T) {
+// 	leastDays := 0
+// 	for ballCount := 27; ballCount <= 127; ballCount++ {
+// 		clock, err := New(ballCount)
+// 		if err != nil {
+// 			//already  tested
+// 		}
+
+// 		numDays := clock.CalculateDaysUntilDefault()
+
+// 		if leastDays == 0 || (leastDays != 0 && numDays < leastDays) {
+// 			leastDays = numDays
+// 		}
+
+// 	}
+
+// 	t.Errorf("Least number of days:%v", leastDays)
+// }

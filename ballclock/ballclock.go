@@ -51,28 +51,25 @@ func New(ballCount int) (*BallClock, error) {
 	return ballClock, err
 }
 
-// Load has two options based on the program requirements.  Either put a ball  with an ID of 0 in index 0 as a static slot
-// since the requirements indicate the hours should always have between 1 and 12 slots filled to represent 1 to 12 o'clock, or
-// adjust the hour track prior to printing, since that mechanism is purely for human readability
-// of the current time, which is not among the requirements. Therefore, the track will be loaded to have the starting time be 12:00 with 11 slots
-// filled, assuming that state actually means 12 rather than 11, given the assumed imaginary static slot of 0
 func (clock *BallClock) load() {
-	for i := 0; i < hourTrackSlots; i++ {
-		clock.hourTrack = append(clock.hourTrack, i+1)
-	}
-	for i := hourTrackSlots; i < clock.ballCount; i++ {
+	for i := 0; i < clock.ballCount; i++ {
 		clock.ballQueue = append(clock.ballQueue, i+1)
 	}
 }
 
 // IsDefaultState checks the hour and queue to see if they are in the default 12:00 state
 func (clock *BallClock) IsDefaultState() bool {
-	jsonString, err := clock.ToJSONString()
-	if err != nil {
-		fmt.Printf("Error checking  default state: %s\n", err.Error())
+	if len(clock.ballQueue) == clock.ballCount {
+		for i := 0; i < clock.ballCount; i++ {
+			if clock.ballQueue[i] != i+1 {
+				return false
+			}
+		}
+	} else {
+		return false
 	}
 
-	return jsonString == defaultState
+	return true
 }
 
 // ToJSONString returns the clock state in a JSON format
@@ -96,12 +93,15 @@ func (clock *BallClock) ToJSONString() (string, error) {
 
 // CalculateDaysUntilDefault gets the number of days until the balls return to the default state
 func (clock *BallClock) CalculateDaysUntilDefault() int {
-	days := 0
+	days := 1
 	for {
-		for m := 1; m < minutesInDay; m++ {
+		for m := 0; m < minutesInDay; m++ {
 			clock.Tick()
-			if clock.IsDefaultState() {
-				return days
+
+			if m == minutesInDay-1 && days >= 12 {
+				if clock.IsDefaultState() {
+					return days
+				}
 			}
 		}
 		days++
