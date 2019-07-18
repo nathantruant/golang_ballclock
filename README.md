@@ -21,7 +21,7 @@ Output:
 
     35 balls cycle after 12 days
 
-2. Takes two parameters, the number of balls and the number of minutes to run for.  If the number of minutes is specified, the clock will run to the number of minutes and report the state of the tracks at that point in a JSON format. The clock starts from 12:00 (AKA: 11 balls in the hour slot with an assumed  static slot  representing  1 for a standard twelve hour clock).
+2. Takes two parameters, the number of balls and the number of minutes to run for.  If the number of minutes is specified, the clock will run to the number of minutes and report the state of the tracks at that point in a JSON format. The clock starts from 12:00 AM (AKA: 11 balls in the hour slot with an assumed  static slot  representing  1 for a standard 24-hour clock).
 
 Usage:
 
