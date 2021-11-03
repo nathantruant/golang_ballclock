@@ -73,6 +73,7 @@ func (clock *BallClock) IsDefaultState() bool {
 }
 
 // ToJSONString returns the clock state in a JSON format
+// It should be noted this is not an effecient way to capture state. Json serialization is slow and this project is old.
 func (clock *BallClock) ToJSONString() (string, error) {
 	state := struct {
 		Min     []int
